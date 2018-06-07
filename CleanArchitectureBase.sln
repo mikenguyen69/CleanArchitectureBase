@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureBase.Core"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureBase.Tests", "CleanArchitectureBase.Tests\CleanArchitectureBase.Tests.csproj", "{D6C52613-CE8C-4AAA-9954-B344CAEFBD13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureBase.Infrastructure", "CleanArchitectureBase.Infrastructure\CleanArchitectureBase.Infrastructure.csproj", "{4356CDC5-F6A0-4F09-B951-1B899556EAFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D6C52613-CE8C-4AAA-9954-B344CAEFBD13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6C52613-CE8C-4AAA-9954-B344CAEFBD13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6C52613-CE8C-4AAA-9954-B344CAEFBD13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4356CDC5-F6A0-4F09-B951-1B899556EAFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4356CDC5-F6A0-4F09-B951-1B899556EAFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4356CDC5-F6A0-4F09-B951-1B899556EAFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4356CDC5-F6A0-4F09-B951-1B899556EAFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

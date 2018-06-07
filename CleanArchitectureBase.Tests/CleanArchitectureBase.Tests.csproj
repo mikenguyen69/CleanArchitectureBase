@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
     <PackageReference Include="Moq" Version="4.8.2" />
     <PackageReference Include="xunit" Version="2.3.1" />
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CleanArchitectureBase.Core\CleanArchitectureBase.Core.csproj" />
+    <ProjectReference Include="..\CleanArchitectureBase.Infrastructure\CleanArchitectureBase.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
