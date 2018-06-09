@@ -14,34 +14,34 @@ namespace CleanArchitectureBase.Tests.Data
     {
         private AppDbContext _dbContext;
 
-        private static DbContextOptions<AppDbContext> CreateNewContextOptions()
-        {
-            // Create a fresh service provider, and therefore a fresh 
-            // InMemory database instance.
-            var serviceProvider = new ServiceCollection()
-                .AddEntityFrameworkInMemoryDatabase()
-                .BuildServiceProvider();
-
-            // Create a new options instance telling the context to use an
-            // InMemory database and the new service provider.
-            var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseInMemoryDatabase("cleanarchitecture")
-                   .UseInternalServiceProvider(serviceProvider);
-
-            return builder.Options;
-        }
-
         private EfRepository<ToDoItem> GetRepository()
         {
             var options = CreateNewContextOptions();
             var mockDispatcher = new Mock<IDomainEventDispatcher>();
 
             _dbContext = new AppDbContext(options, mockDispatcher.Object);
+
             return new EfRepository<ToDoItem>(_dbContext);
+
+        }
+
+        private DbContextOptions<AppDbContext> CreateNewContextOptions()
+        {
+            // Setup fresh in-memory service provider 
+            var serviceProvider = new ServiceCollection()
+                .AddEntityFrameworkInMemoryDatabase()
+                .BuildServiceProvider();
+
+            // Builder for the service provider 
+            var builder = new DbContextOptionsBuilder<AppDbContext>();
+            builder.UseInMemoryDatabase("cleanarchitecture")
+                .UseInternalServiceProvider(serviceProvider);
+
+            return builder.Options;
         }
 
         [Fact]
-        public void AddItemAndSetId()
+        public void AddItemAndGetId()
         {
             var repository = GetRepository();
             var item = new ToDoItem();
@@ -57,52 +57,47 @@ namespace CleanArchitectureBase.Tests.Data
         [Fact]
         public void UpdateItemAfterAddingIt()
         {
-            // add an item
             var repository = GetRepository();
-            var initialTitle = Guid.NewGuid().ToString();
+            string initiatedTitle = Guid.NewGuid().ToString();
             var item = new ToDoItem()
             {
-                Title = initialTitle
+                Title = initiatedTitle
             };
             repository.Add(item);
 
-            // detach the item so we get a different instance
+            // detach the items for that we can get different instance 
             _dbContext.Entry(item).State = EntityState.Detached;
 
             // fetch the item and update its title
-            var newItem = repository.List()
-                .FirstOrDefault(i => i.Title == initialTitle);
+            var newItem = repository.List().FirstOrDefault(x => x.Title == initiatedTitle);
+
             Assert.NotSame(item, newItem);
+
             var newTitle = Guid.NewGuid().ToString();
             newItem.Title = newTitle;
 
-            // Update the item
             repository.Update(newItem);
-            var updatedItem = repository.List()
-                .FirstOrDefault(i => i.Title == newTitle);
+
+            var updatedItem = repository.List().FirstOrDefault(x => x.Title == newTitle);
 
             Assert.NotEqual(item.Title, updatedItem.Title);
-            Assert.Equal(newItem.Id, updatedItem.Id);
+            Assert.Equal(item.Id, updatedItem.Id);
         }
 
         [Fact]
         public void DeleteItemAfterAddingIt()
         {
-            // add an item
             var repository = GetRepository();
-            var initialTitle = Guid.NewGuid().ToString();
+            string initiatedTitle = Guid.NewGuid().ToString();
             var item = new ToDoItem()
             {
-                Title = initialTitle
+                Title = initiatedTitle
             };
             repository.Add(item);
 
-            // delete the item
             repository.Delete(item);
 
-            // verify it's no longer there
-            Assert.DoesNotContain(repository.List(),
-                i => i.Title == initialTitle);
+            Assert.DoesNotContain(repository.List(), x => x.Title == initiatedTitle);
         }
     }
 }
